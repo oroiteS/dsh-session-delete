@@ -1,0 +1,13 @@
+# dsh-session-delete — mount layer (bundle patch)
+#
+# The cordis mount row for this plugin, in the same format as the
+# dsh-web-app / dsh-base bundle patches. When this package is listed in the
+# profile's `dsh.profile.bundles`, the Loader applies this file automatically.
+#
+# The host half is a pure service plugin (a /api/dsh-session-delete/* bridge
+# over the workspace registry + session persistence); the browser half is
+# discovered through the package.json `dsh.client` declaration by
+# dsh-client-modules and enters `window.__DSH_BOOT__` automatically.
+- insert:
+    - id: session-delete
+      name: dsh-session-delete

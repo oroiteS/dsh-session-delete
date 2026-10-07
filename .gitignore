@@ -1,0 +1,26 @@
+# - Dependencies ---------------------
+# 本插件零运行时依赖：peerDependencies 全部由 DSH 宿主注入（optional）。
+node_modules/
+.pnpm-store/
+
+# - Extracted DSH sources (dev reference only) --
+.tmp/
+
+# - Logs / temp ----------------------
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+
+# - Env / local config ------------------
+.env
+.env.*
+!.env.example
+
+# - Editors ------------------------
+.idea/
+.vscode/
+*.code-workspace
