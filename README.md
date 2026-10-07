@@ -27,9 +27,17 @@ DSH 桌面端的"归档"只是把会话从左侧栏隐藏——会话记录依�
 
 ## 安装
 
-### 方式一：profile 本地链接（推荐本机开发）
+推荐把插件放进 DSH 的插件目录 `~/.dsh/plugins/`，以 `file:` 依赖实体安装——安装完成后
+插件自包含于 profile，删除任何源码目录都不影响运行。
 
-1. 编辑 `~/.dsh/profiles/desktop/package.json`：
+### 方式一：从 GitHub 克隆安装（推荐）
+
+```bash
+# 1) 克隆到 DSH 插件目录
+git clone https://github.com/oroiteS/dsh-session-delete.git ~/.dsh/plugins/dsh-session-delete
+```
+
+2. 编辑 `~/.dsh/profiles/desktop/package.json`（`file:` 用相对路径即可，两个目录都在 `~/.dsh` 下）：
 
    ```json
    {
@@ -42,29 +50,42 @@ DSH 桌面端的"归档"只是把会话从左侧栏隐藏——会话记录依�
        }
      },
      "dependencies": {
-       "dsh-session-delete": "link:/Users/syn/my/projects/dsh-session-delete"
+       "dsh-session-delete": "file:../../plugins/dsh-session-delete"
      }
    }
    ```
 
-2. 在 profile 目录安装并重启 DSH：
+3. 安装并重启 DSH：
 
    ```bash
    cd ~/.dsh/profiles/desktop && pnpm install
    ```
 
-### 方式二：npm / file 依赖
+安装后：左侧栏出现新的**会话管理**图标（排在定时任务之后）；每个会话的 "…" 菜单里出现"删除会话…"。
+
+### 更新已有安装
 
 ```bash
-# npm 发布后：
-cd ~/.dsh/profiles/desktop
-pnpm add dsh-session-delete
-# 或本地目录：pnpm add file:/Users/syn/my/projects/dsh-session-delete
+cd ~/.dsh/plugins/dsh-session-delete && git pull
+cd ~/.dsh/profiles/desktop && pnpm install
+# 重启 DSH
 ```
 
-并把 `"dsh-session-delete"` 加入该 profile `package.json` 的 `dsh.profile.bundles` 数组，然后重启 DSH。
+> 注意：`file:` 是实体拷贝，修改源码（或 `git pull`）后必须重跑 `pnpm install` 才会生效。
 
-安装后：左侧栏出现新的**会话管理**图标（排在定时任务之后）；每个会话的 "…" 菜单里出现"删除会话…"。
+### 方式二：开发模式（link: 软链）
+
+开发插件本身时，可用软链让源码改动即时生效（重启 DSH 即可，无需重新安装）：
+
+```json
+"dsh-session-delete": "link:/path/to/dsh-session-delete"
+```
+
+注意 `link:` 只是指向源目录的软链——删除源目录插件即失效，日常使用请用方式一。
+
+### 方式三：npm（规划中）
+
+npm 发布后即可 `pnpm add dsh-session-delete` 一键安装。
 
 ## 使用
 
